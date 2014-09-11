@@ -14,8 +14,6 @@ def show_similar_art(id):
     art = []
     results = sp.artist_related_artists(id)
     art.extend(results['artists'])
-    seen = set()
-    art.sort(key=lambda art:art['name'].lower())
     for art in art:
         if art['name'] not in uniq_bands:
             uniq_bands.append(art['name'])
@@ -30,7 +28,7 @@ def get_artist_info(name):
     items = results['artists']['items']
     if len(items) > 0:
         artist = items[0]
-        with open(artist['name'] + '.txt', 'w') as outfile:
+        with open('JSON/' + artist['name'] + '.json', 'w') as outfile:
             json.dump(results, outfile)
         show_similar_art(artist['id'])
         print "Completed " + artist['name']
